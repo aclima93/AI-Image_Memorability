@@ -1,25 +1,25 @@
-function [num_features, num_images, num_test_images, training_set, desired_output, test_input] = prep_data( input_args )
+function prep_data( N )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
-disp('Loading features');
+disp('Preparing features');
 features = load('target_features.mat');
 features = features.objectnames;
 num_features = length(features);
 
-disp('Loading test set');
+disp('Preparing test set');
 test_input = load('filler_images.mat');
-[~,~,~,num_test_images] = size(test_input.img(:,:,:,1:400));
-test_input = reshape(test_input.img(:,:,:,1:400), num_test_images, [])'; %imshow(img(:,:,:,1))
+[~,~,~,num_test_images] = size(test_input.img(:,:,:,1:N));
+test_input = reshape(test_input.img(:,:,:,1:N), num_test_images, [])'; %imshow(img(:,:,:,1))
 
-disp('Loading training set');
+disp('Preparing training set');
 training_set = load('target_images.mat');
-[~,~,~,num_images] = size(training_set.img(:,:,:,1:400));
-training_set = reshape(training_set.img(:,:,:,1:400), num_images, [])';
+[~,~,~,num_images] = size(training_set.img(:,:,:,1:N));
+training_set = reshape(training_set.img(:,:,:,1:N), num_images, [])';
 % matriz de 2400 colunas, cada uma resulta da concatenação vertical das
 % matrizes RGB para cada imagem
 
-disp('Loading expected training set outputs');
+disp('Preparing expected training set outputs');
 temp = load('target_features.mat');
 temp = struct2cell(temp.Dmemory(:));
 desired_output = zeros(num_features, num_images);
@@ -35,6 +35,17 @@ for i=[1:num_images]
     
     desired_output(:,i) = desired_output_features';
 end
+
+%desired_output = uint16(desired_output);
+training_set = double(training_set);
+test_input = double(test_input);
+
+save num_features;
+save num_images;
+save num_test_images;
+save training_set;
+save desired_output;
+save test_input;
 
 end
 

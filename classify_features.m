@@ -6,7 +6,6 @@ function res = classify_features(num_features, num_images, num_test_images, P, T
     
     %{    
     [~, ~, ~, N] = size(P);
-    
     transfer_function = 'hardlim';
     learning_function = 'learnp';
     
@@ -33,28 +32,30 @@ function res = classify_features(num_features, num_images, num_test_images, P, T
     results = sim(net, Pt);
     %}
     
-    net = patternnet(8);
+    disp('Training Feature Network');
     
-    ind = 0;
+    net = patternnet(10);%[ceil(log2(num_features))]);
+    net.trainParam.showWindow = false;
+    
     num_blocks = 100;
-    step = floor(num_images/num_blocks);
-    
+    %{
+    ind = 1;
+    ind_step = floor(num_images/num_blocks);
     while ind < num_images
-        
-        disp(ind);
-        
-        if ind + step <= num_images
-            net2 = train(net, P(:, ind:ind+step), T(:, ind:ind+step), 'useGPU','yes');%, 'reduction', 10);
+        next_ind = ind + ind_step;
+        if next_ind < num_images
+            net = train(net, P(:, ind:next_ind), T(:, ind:next_ind), 'useGPU','yes','showResources','yes');%, 'reduction', num_blocks);
         else
-            net2 = train(net, P(:, ind:end), T(:, ind:end), 'useGPU','yes');%, 'reduction', 10);
+            net = train(net, P(:, ind:end), T(:, ind:end), 'useGPU','yes','showResources','yes');%, 'reduction', num_blocks);
         end
-        
-        net = net2;
-        ind = ind + step;
+        ind = next_ind;
     end
+    %}
+    net = train(net, P, T, 'reduction', num_blocks);%,'useGPU','only','showResources','yes'
     
     save net;
-    pause;
+    
+    disp('Testing Feature Network');
     
     results = net(Pt);
     
