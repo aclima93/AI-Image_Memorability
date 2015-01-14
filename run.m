@@ -1,6 +1,7 @@
 
 %uncomment to generate new data from datasets
 %prep_data;
+%prep_objects_data;
 
 
 load num_features;
@@ -14,3 +15,7 @@ clear training_set;
 load test_input;
 result_vectors = classify_feature_network(desired_output, test_input); 
 save result_vectors;
+
+
+
+
