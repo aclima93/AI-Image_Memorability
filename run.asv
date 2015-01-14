@@ -17,6 +17,6 @@ save('validation_results.mat', 'classes', 'perf', 'results');
 
 %{
 load test_input;
-[classes, perf, results] = classify_feature_network(desired_output, test_input); 
-save('testing_results.mat', 'classes', 'perf', 'results');
+result_vectors2 = classify_feature_network(desired_output, test_input); 
+save result_vectors2;
 %}
