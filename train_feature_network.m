@@ -10,6 +10,7 @@ function net = train_feature_network(num_features, P, T)
     net.trainParam.showWindow = false;
     
     num_blocks = 100;
-    net = train(net, P, T, 'reduction', num_blocks);%,'useGPU','only','showResources','yes'
+    %net = train(net, P, T,'useGPU','only','showResources','yes','reduction',num_blocks);
+    net = train(net, P, T,'reduction',num_blocks);
     
 end
