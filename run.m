@@ -2,6 +2,9 @@
 %uncomment to generate new data from datasets
 %prep_data;
 
+%------------------------------------------
+% numerical feature training and simulation
+% -----------------------------------------
 
 load num_features;
 load training_set;
@@ -20,3 +23,7 @@ load test_input;
 [classes, perf, results] = classify_feature_network(desired_output, test_input); 
 save('testing_results.mat', 'classes', 'perf', 'results');
 %}
+
+%------------------------------------------
+% binary feature training and simulation
+% -----------------------------------------

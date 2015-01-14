@@ -1,6 +1,6 @@
 
 rng(666); % seed used for random number generation
-num_samples = 500;
+num_samples = 750;
 
 
 disp('Preparing features');
@@ -39,10 +39,10 @@ for i=[1:num_samples]
     %as vezes o find não encontrava as strings for some god forsaken reason
     %desired_output_features(find(ismember(features, feature'))) = num_feature';
     for j = 1:length(feature)
-        desired_output_features( find( strcmp(features, feature(j)))) = num_feature(j);
+        desired_output_features( find( strcmp(features, feature(j)))) = (num_feature(j) > 0);
     end
-    
-    training_output(:,i) = desired_output_features';
+    features_class = bi2de(desired_output_features);
+    training_output(features_class, i) = 1;
 end
 save('training_output.mat', 'training_output', '-v7.3');
 clear training_output;
@@ -52,10 +52,11 @@ for i=[1:num_samples]
     desired_output_features = zeros(size(features));
 
     for j = 1:length(feature)
-        desired_output_features( find( strcmp(features, feature(j)))) = num_feature(j);
+        desired_output_features( find( strcmp(features, feature(j)))) = (num_feature(j) > 0);
     end
     
-    validation_output(:,i) = desired_output_features';
+    features_class = bi2de(desired_output_features);
+    validation_output(features_class, i) = 1;
 end
 save('validation_output.mat', 'validation_output', '-v7.3');
 clear validation_output;
