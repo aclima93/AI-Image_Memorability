@@ -1,3 +1,4 @@
+
 disp('Preparing features');
 features = load('target_features.mat');
 features = features.objectnames;
@@ -32,7 +33,6 @@ for i=[1:num_images]
 end
 save('desired_output.mat', 'desired_output', '-v7.3');
 clear desired_outputs;
-
 
 disp('Preparing test set');
 test_input = load('filler_images.mat');
