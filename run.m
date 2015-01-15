@@ -1,6 +1,6 @@
 
 %uncomment to generate new data from datasets
-%prep_data;
+prep_data;
 %prep_objects_data;
 
 
