@@ -1,15 +1,16 @@
-function [classes, perf, results] = classify_feature_network(net, T, Pt)
+function [classes, perf, results] = validate_feature_network(net, T, Pt)
 
     % Pt : test inputs
    
     disp('Testing Feature Network');
-    
+        
     num_blocks = 100;
     ind = 1;
     i = 1;
     [~, num_images] = size(T);
     ind_step = floor(num_images/num_blocks);
     perf = zeros(num_blocks, 1);
+    
     while ind < num_images
         
         next_ind = ind + ind_step;
@@ -26,5 +27,5 @@ function [classes, perf, results] = classify_feature_network(net, T, Pt)
     end
     
     classes = vec2ind(results);
-    
+
 end

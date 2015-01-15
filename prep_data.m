@@ -1,7 +1,10 @@
 
 rng(666); % seed used for random number generation
-num_samples = 750;
+num_samples = 100;
 
+disp('------------------------------------------');
+disp('Preparing datasets');
+disp('------------------------------------------');
 
 disp('Preparing features');
 features = load('target_features.mat');
@@ -12,13 +15,17 @@ save('num_features.mat', 'num_features');
 
 disp('Preparing training and validation sets');
 training_set = load('target_images.mat');
-[~,~,~,num_images] = size(training_set.img);
+[N,M,~,num_images] = size(training_set.img);
+training_images = zeros(N,M,num_images);
+for i=1:num_images
+   training_images(:,:,i) = rgb2gray(training_set.img(:,:,:,i));
+end
 random_dataset = randperm(num_images, num_samples*2);
 train_half = random_dataset(1:num_samples);
 validation_half = random_dataset(num_samples:end);
-temp = reshape(training_set.img, num_images, [])';
-training_set = double(temp(train_half));
-validation_set = double(temp(validation_half));
+temp = reshape(training_images, num_images, [])';
+training_set = temp(train_half);
+validation_set = temp(validation_half);
 save('training_set.mat', 'training_set', '-v7.3');
 save('validation_set.mat', 'validation_set', '-v7.3');
 clear training_set;
@@ -39,10 +46,10 @@ for i=[1:num_samples]
     %as vezes o find não encontrava as strings for some god forsaken reason
     %desired_output_features(find(ismember(features, feature'))) = num_feature';
     for j = 1:length(feature)
-        desired_output_features( find( strcmp(features, feature(j)))) = (num_feature(j) > 0);
+        desired_output_features( find( strcmp(features, feature(j)))) = num_feature(j);
     end
-    features_class = bi2de(desired_output_features);
-    training_output(features_class, i) = 1;
+    
+    training_output(:,i) = desired_output_features';
 end
 save('training_output.mat', 'training_output', '-v7.3');
 clear training_output;
@@ -52,11 +59,10 @@ for i=[1:num_samples]
     desired_output_features = zeros(size(features));
 
     for j = 1:length(feature)
-        desired_output_features( find( strcmp(features, feature(j)))) = (num_feature(j) > 0);
+        desired_output_features( find( strcmp(features, feature(j)))) = num_feature(j);
     end
     
-    features_class = bi2de(desired_output_features);
-    validation_output(features_class, i) = 1;
+    validation_output(:,i) = desired_output_features';
 end
 save('validation_output.mat', 'validation_output', '-v7.3');
 clear validation_output;
@@ -64,10 +70,14 @@ clear validation_output;
 
 disp('Preparing test set');
 test_input = load('filler_images.mat');
-[~,~,~,num_test_images] = size(test_input.img(:,:,:,1:num_images));
-test_input = reshape(test_input.img(:,:,:,1:num_images), num_test_images, [])'; %imshow(img(:,:,:,1))
+num_test_images = num_samples*2;
+test_images = zeros(N,M,num_test_images);
+for i=1:num_test_images
+   test_images(:,:,i) = rgb2gray(test_input.img(:,:,:,i));
+end
+test_input = reshape(test_images, num_test_images, [])'; %imshow(img(:,:,:,1))
 random_dataset = randperm(num_test_images, num_samples);
-test_input = double(test_input(random_dataset));
+test_input = test_input(random_dataset);
 save('test_input.mat', 'test_input', '-v7.3');
 clear test_input;
 

@@ -1,15 +1,14 @@
-function classes = classify_feature_network(net, T, Pt)
+function [classes, results] = test_feature_network(net, Pt)
 
     % Pt : test inputs
    
     disp('Testing Feature Network');
-    
+        
     num_blocks = 100;
     ind = 1;
-    i = 1;
-    [~, num_images] = size(T);
+    [~, num_images] = size(Pt);
     ind_step = floor(num_images/num_blocks);
-    perf = zeros(ind_step,3);
+    
     while ind < num_images
         
         next_ind = ind + ind_step;
@@ -19,11 +18,10 @@ function classes = classify_feature_network(net, T, Pt)
             results(:, ind:num_images) = net(Pt(:, ind:num_images));
         end
 
-        perf(i) = [ind, next_ind, perform(net, T(:,ind:next_ind), results(:,ind:next_ind))];
         ind = next_ind;
-        i = i + 1;
     end
     
     classes = vec2ind(results);
     
 end
+
