@@ -2,8 +2,9 @@ function [classes, perf, results] = validate_feature_network(net, T, Pt)
 
     % Pt : test inputs
    
-    disp('\tValidating Feature Network');
+    disp(sprintf('\tValidating Feature Network'));
         
+    %{
     num_blocks = 100;
     ind = 1;
     i = 1;
@@ -25,7 +26,10 @@ function [classes, perf, results] = validate_feature_network(net, T, Pt)
         ind = next_ind;
         i = i + 1;
     end
+    %}
     
+    results = net(Pt);
+    perf = perform(net, T, results);
     classes = vec2ind(results);
 
 end

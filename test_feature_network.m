@@ -2,8 +2,9 @@ function [classes, results] = test_feature_network(net, Pt)
 
     % Pt : test inputs
    
-    disp('\tTesting Feature Network');
+    disp(sprintf('\tTesting Feature Network'));
         
+    %{
     num_blocks = 100;
     ind = 1;
     [~, num_images] = size(Pt);
@@ -20,7 +21,9 @@ function [classes, results] = test_feature_network(net, Pt)
 
         ind = next_ind;
     end
+    %}
     
+    results = net(Pt);
     classes = vec2ind(results);
     
 end

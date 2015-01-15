@@ -6,15 +6,15 @@ disp('------------------------------------------');
 disp('Preparing datasets');
 disp('------------------------------------------');
 
-disp('\tPreparing features');
-features = load('target_features.mat');
+disp(sprintf('\tPreparing features'));
+features = load('data/target_features.mat');
 features = features.objectnames;
 num_features = length(features);
-save('num_features.mat', 'num_features');
+save('dataset/num_features.mat', 'num_features');
 
 
-disp('\tPreparing training and validation sets');
-training_set = load('target_images.mat');
+disp(sprintf('\tPreparing training and validation sets'));
+training_set = load('data/target_images.mat');
 [N,M,~,num_images] = size(training_set.img);
 training_images = zeros(N,M,num_images);
 for i=1:num_images
@@ -22,12 +22,12 @@ for i=1:num_images
 end
 random_dataset = randperm(num_images, num_samples*2);
 train_half = random_dataset(1:num_samples);
-validation_half = random_dataset(num_samples:end);
+validation_half = random_dataset(num_samples+1:end);
 temp = reshape(training_images, num_images, [])';
 training_set = temp(train_half);
 validation_set = temp(validation_half);
-save('training_set.mat', 'training_set', '-v7.3');
-save('validation_set.mat', 'validation_set', '-v7.3');
+save('dataset/training_set.mat', 'training_set', '-v7.3');
+save('dataset/validation_set.mat', 'validation_set', '-v7.3');
 clear training_set;
 clear validation_set;
 clear temp;
@@ -35,8 +35,8 @@ clear temp;
 % matrizes RGB para cada imagem
 
 
-disp('\tPreparing expected training and validation outputs');
-temp = load('target_features.mat');
+disp(sprintf('\tPreparing expected training and validation outputs'));
+temp = load('data/target_features.mat');
 temp = struct2cell(temp.Dmemory(:));
 training_output = zeros(num_features, num_samples);
 for i=[1:num_samples]
@@ -51,7 +51,7 @@ for i=[1:num_samples]
     
     training_output(:,i) = desired_output_features';
 end
-save('training_output.mat', 'training_output', '-v7.3');
+save('dataset/training_output.mat', 'training_output', '-v7.3');
 clear training_output;
 validation_output = zeros(num_features, num_samples);
 for i=[1:num_samples]
@@ -64,12 +64,12 @@ for i=[1:num_samples]
     
     validation_output(:,i) = desired_output_features';
 end
-save('validation_output.mat', 'validation_output', '-v7.3');
+save('dataset/validation_output.mat', 'validation_output', '-v7.3');
 clear validation_output;
 
 
-disp('\tPreparing test set');
-test_input = load('filler_images.mat');
+disp(sprintf('\tPreparing test set'));
+test_input = load('data/filler_images.mat');
 num_test_images = num_samples*2;
 test_images = zeros(N,M,num_test_images);
 for i=1:num_test_images
@@ -78,7 +78,7 @@ end
 test_input = reshape(test_images, num_test_images, [])'; %imshow(img(:,:,:,1))
 random_dataset = randperm(num_test_images, num_samples);
 test_input = test_input(random_dataset);
-save('test_input.mat', 'test_input', '-v7.3');
+save('dataset/test_input.mat', 'test_input', '-v7.3');
 clear test_input;
 
 clear all;

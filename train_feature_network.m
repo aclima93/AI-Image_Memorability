@@ -4,7 +4,7 @@ function net = train_feature_network(num_features, P, T)
     % T : desired training outputs
     % Pt : test inputs
     
-    disp('\tTraining Feature Network');
+    disp(sprintf('\tTraining Feature Network'));
     [~,~,~,num_images] = size(P);
     num_neurons = ceil(log2(num_features));
     num_layers = 1;%ceil(log2(num_images));
