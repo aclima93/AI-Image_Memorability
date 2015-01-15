@@ -2,7 +2,7 @@ function [classes, perf, results] = validate_feature_network(net, T, Pt)
 
     % Pt : test inputs
    
-    disp('Testing Feature Network');
+    disp('\tValidating Feature Network');
         
     num_blocks = 100;
     ind = 1;

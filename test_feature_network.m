@@ -2,7 +2,7 @@ function [classes, results] = test_feature_network(net, Pt)
 
     % Pt : test inputs
    
-    disp('Testing Feature Network');
+    disp('\tTesting Feature Network');
         
     num_blocks = 100;
     ind = 1;

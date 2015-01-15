@@ -1,19 +1,19 @@
 
 rng(666); % seed used for random number generation
-num_samples = 100;
+num_samples = 1200;
 
 disp('------------------------------------------');
 disp('Preparing datasets');
 disp('------------------------------------------');
 
-disp('Preparing features');
+disp('\tPreparing features');
 features = load('target_features.mat');
 features = features.objectnames;
 num_features = length(features);
 save('num_features.mat', 'num_features');
 
 
-disp('Preparing training and validation sets');
+disp('\tPreparing training and validation sets');
 training_set = load('target_images.mat');
 [N,M,~,num_images] = size(training_set.img);
 training_images = zeros(N,M,num_images);
@@ -35,7 +35,7 @@ clear temp;
 % matrizes RGB para cada imagem
 
 
-disp('Preparing expected training and validation outputs');
+disp('\tPreparing expected training and validation outputs');
 temp = load('target_features.mat');
 temp = struct2cell(temp.Dmemory(:));
 training_output = zeros(num_features, num_samples);
@@ -68,7 +68,7 @@ save('validation_output.mat', 'validation_output', '-v7.3');
 clear validation_output;
 
 
-disp('Preparing test set');
+disp('\tPreparing test set');
 test_input = load('filler_images.mat');
 num_test_images = num_samples*2;
 test_images = zeros(N,M,num_test_images);
