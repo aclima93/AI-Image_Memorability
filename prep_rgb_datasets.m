@@ -85,5 +85,20 @@ test_input = test_input(:, 1:num_samples);
 save('dataset/rgb/test_input.mat', 'test_input', '-v7.3');
 clear test_input;
 
+
+%%%%%%
+% Generate the corresponding binary outputs for the validation and training
+% datasets.
+%%%%%%
+load('dataset/rgb/validation_output.mat')
+validation_output(validation_output > 0) = 1;
+bin_validation_output = validation_output;
+save('dataset/rgb/bin_validation_output.mat','bin_validation_output', '-v7.3')
+load dataset/rgb/training_output;
+training_output(training_output > 0) = 1;
+bin_training_output = training_output;
+save('dataset/rgb/bin_training_output.mat','bin_training_output', '-v7.3')
+
+
 clear all;
 

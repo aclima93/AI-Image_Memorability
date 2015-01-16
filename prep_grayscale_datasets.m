@@ -99,5 +99,19 @@ test_input = test_input(:, 1:num_samples);
 save('dataset/grayscale/test_input.mat', 'test_input', '-v7.3');
 clear test_input;
 
+
+%%%%%%
+% Generate the corresponding binary outputs for the validation and training
+% datasets.
+%%%%%%
+load('dataset/grayscale/validation_output.mat')
+validation_output(validation_output > 0) = 1;
+bin_validation_output = validation_output;
+save('dataset/grayscale/bin_validation_output.mat','bin_validation_output', '-v7.3')
+load dataset/grayscale/training_output;
+training_output(training_output > 0) = 1;
+bin_training_output = training_output;
+save('dataset/grayscale/bin_training_output.mat','bin_training_output', '-v7.3')
+
 clear all;
 

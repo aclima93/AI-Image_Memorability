@@ -19,7 +19,17 @@ disp('---------------------------------');
 rgb_sim;
 %}
 
-analyse_results;
+disp('------------------------------------');
+disp('Analysing results of all simulations');
+disp('------------------------------------');
+analyse_image_results;
+
+
+disp('--------------------------------------------');
+disp('Feature Memorability training and simulation');
+disp('--------------------------------------------');
+prep_objects_data;
+
 
 disp(' ');
 disp('Finished!');
