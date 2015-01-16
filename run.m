@@ -1,21 +1,38 @@
 
-%uncomment to generate new data from datasets
-prep_data;
-%prep_objects_data;
+%Uncomment to generate new datasets from original data
+%prep_datasets;
+
+disp('---------------------------------');
+disp('GrayScale training and simulation');
+disp('---------------------------------');
+grayscale_sim;
+
+%{
+%%%%%%
+% WARNING !!!
+% Very resource intensive, may cause blue screens or similar.
+% Minimum requierment of at least 16GB of RAM.
+%%%%%%
+disp('---------------------------------');
+disp('RGB training and simulation');
+disp('---------------------------------');
+rgb_sim;
+%}
+
+disp('------------------------------------');
+disp('Analysing results of all simulations');
+disp('------------------------------------');
+analyse_image_results;
 
 
-load num_features;
-load training_set;
-load desired_output;
+disp('--------------------------------------------');
+disp('Feature Memorability training and simulation');
+disp('--------------------------------------------');
+prep_objects_data;
 
 
-net = train_feature_network(num_features, training_set, desired_output);
-clear training_set;
+disp(' ');
+disp('Finished!');
+disp(' ');
 
-load test_input;
-result_vectors = classify_feature_network(desired_output, test_input); 
-save result_vectors;
-
-
-
-
+clear all;
