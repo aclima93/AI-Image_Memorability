@@ -1,4 +1,6 @@
 
+iptsetpref('ImshowAxesVisible', 'off');
+
 %%%%%%
 % GrayScale results
 %%%%%%
@@ -21,18 +23,19 @@ figure ;
 barh([val_proc_perf, val_perf; bin_val_proc_perf, bin_val_perf]);
 title('Performance of Validation Results');
 legend('Processed results','Unprocessed results');
-ylabel(sprintf('Validation Results\n\nNumeric Binary'));
+ylabel(sprintf('Validation Results\n\nNumeric                                                   Binary'));
 xlabel('Performance');
 saveas(gcf,'results/grayscale/performances.png');
 close all;
 
 figure ;
-correct = find(validation_output == val_results);
-correct_proc = find(validation_output == val_proc_results);
-correct_bin = find(bin_validation_output == bin_val_results);
-correct_bin_proc = find(bin_validation_output == bin_val_proc_results);
-barh([length(correct) , length(correct_bin) ; length(correct_proc), length(correct_bin_proc)]);
+correct = length(find(validation_output == val_results));
+correct_proc = length(find(validation_output == val_proc_results));
+correct_bin = length(find(bin_validation_output == bin_val_results));
+correct_bin_proc = length(find(bin_validation_output == bin_val_proc_results));
+barh([correct , correct_bin ; correct_proc, correct_bin_proc]);
 title('Comparison of Validation Results');
+legend('Numeric results','Binary results');
 ylabel(sprintf('Processed Validation Results\n\nUnprocessed                                                  Processed'));
 xlabel('Number of similarities with expected output');
 saveas(gcf,'results/grayscale/similarities.png');
@@ -64,6 +67,7 @@ close all;
 % the most and least memorable images.
 %%%%%%
 load('data/filler_images.mat');
+
 num = 6;
 [sortedValues,sortIndex] = sort(mem_proc_results, 'descend');
 most_memorable = sortIndex(1:num);
@@ -77,10 +81,11 @@ for i = 1:num
 end
 close all;
 
-
 %%%%%%
 % RGB results
 %%%%%%
 %{
 
 %}
+
+iptsetpref('ImshowAxesVisible', 'on');

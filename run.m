@@ -1,6 +1,6 @@
 
-%Uncomment to generate new datasets from original data
-%prep_datasets;
+rng(666); % seed used for random number generation
+%prep_datasets; %Uncomment to generate new datasets from original data
 
 disp('---------------------------------');
 disp('GrayScale training and simulation');

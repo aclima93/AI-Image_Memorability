@@ -1,16 +1,13 @@
 
-
-disp('-------------------------------');
-disp('Preparing Memorability datasets');
-disp('-------------------------------');
-
 disp(sprintf('\nNumerical Feature Memorability'));
 
 load('dataset/grayscale/training_output.mat');
+load('dataset/grayscale/validation_output.mat');
 load('results/grayscale/testing_results.mat');
 load('dataset/memorability/mem_target.mat');
 
 train_input = training_output(:,1:1111);
+%train_input = validation_output(:,1:1111);
 test_input = test_proc_results(:,1:1111);
 %input = load('dataset/memorability/desired_output.mat');
 %deviam ser 1200 samples para ser do mesmo tamanho que o meu output (ACL)

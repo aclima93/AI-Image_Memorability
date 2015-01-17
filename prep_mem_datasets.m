@@ -1,3 +1,5 @@
+
+
 target = load('dataset/memorability/mem_maps_predicted.mat');
 mem_target = target.mem_maps_predicted * 100;
 
@@ -18,3 +20,4 @@ mem_target(mem_target >= 50) = 1;
 save('dataset/memorability/mem_target.mat', 'mem_target');
 
 clear all;
+

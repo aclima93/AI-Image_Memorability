@@ -3,7 +3,6 @@ disp('----------------------------');
 disp('Preparing GrayScale datasets');
 disp('----------------------------');
 
-num_samples = 1200;
 
 %%%
 % Load the number of features.
@@ -24,14 +23,19 @@ save('dataset/grayscale/num_features.mat', 'num_features');
 disp(sprintf('\tPreparing training and validation sets'));
 training_set = load('data/target_images.mat');
 [N,M,~,num_images] = size(training_set.img);
-training_images = zeros(N,M,num_images);
 
+num_train_images = floor(num_images*0.7);
+num_val_images = floor(num_images*0.3);
+num_test_images = num_images;
+
+train_half = 1:num_train_images;
+validation_half = num_train_images+1:num_images;
+
+training_images = zeros(N,M,num_images);
 for i=1:num_images
    training_images(:,:,i) = rgb2gray(training_set.img(:,:,:,i));
 end
 
-train_half = 1:num_samples;
-validation_half = num_samples+1:num_samples*2;
 temp = reshape(training_images, num_images, [])';
 training_set = temp(:, train_half);
 validation_set = temp(:, validation_half);
@@ -50,9 +54,9 @@ clear temp;
 disp(sprintf('\tPreparing expected training and validation outputs'));
 temp = load('data/target_features.mat');
 temp = struct2cell(temp.Dmemory(:));
-training_output = zeros(num_features, num_samples);
+training_output = zeros(num_features, num_train_images);
 
-for i=[1:num_samples]
+for i=[1:num_train_images]
     [feature, num_feature] = count_unique({temp{train_half(i)}.object.name});
     desired_output_features = zeros(size(features));
     
@@ -64,8 +68,8 @@ for i=[1:num_samples]
 end
 save('dataset/grayscale/training_output.mat', 'training_output', '-v7.3');
 clear training_output;
-validation_output = zeros(num_features, num_samples);
-for i=[1:num_samples]
+validation_output = zeros(num_features, num_val_images);
+for i=[1:num_val_images]
     [feature, num_feature] = count_unique({temp{validation_half(i)}.object.name});
     desired_output_features = zeros(size(features));
 
@@ -86,8 +90,7 @@ clear validation_output;
 %%%%%%
 disp(sprintf('\tPreparing test set'));
 test_input = load('data/filler_images.mat');
-num_test_images = num_samples*2;
-%[~,~,~,num_test_images] = size(test_input.img(:,:,:,1:num_images));
+[~,~,~,num_test_images] = size(test_input.img(:,:,:,1:num_images));
 test_images = zeros(N,M,num_test_images);
 
 for i=1:num_test_images
@@ -95,7 +98,6 @@ for i=1:num_test_images
 end
 
 test_input = reshape(test_images, num_test_images, [])';
-test_input = test_input(:, 1:num_samples);
 save('dataset/grayscale/test_input.mat', 'test_input', '-v7.3');
 clear test_input;
 
