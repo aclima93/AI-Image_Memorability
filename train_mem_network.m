@@ -1,6 +1,12 @@
-function [trained_net] = train_mem_network(input, target)
+function [trained_net] = train_mem_network(P, T)
 
-    [num_features, num_images] = size(input);
+    % P : training inputs
+    % T : desired training outputs
+    % Pt : test inputs
+    
+    disp(sprintf('\tTraining Memorability Network'));
+
+    [num_features, num_images] = size(P);
     net = fitnet(ceil(log2(num_features)));
     
     %net = configure(net, input, target);
@@ -9,6 +15,6 @@ function [trained_net] = train_mem_network(input, target)
     net.trainParam.epochs = 10000;
     net.trainParam.showWindow = false;
     
-    trained_net = train(net, input, target, 'useGPU', 'yes');
+    trained_net = train(net, P, T, 'useGPU', 'yes');
 end
 
