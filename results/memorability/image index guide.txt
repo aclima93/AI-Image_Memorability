@@ -1,0 +1,18 @@
+
+Images with a prefix of 'bin_' cannot be associated with their non-prefix counterparts.
+
+
+
+The image with index 1 represents the best case.
+
+For instance, bin_least_memorable1.png is the least memorable image of the binary set.
+
+least_memorable4.png is less memorable than least_memorable5.png. 
+
+
+
+The same reasoning follows for the the most memorable set of images.
+
+For instance, most_memorable1.png is the most memorable image of the numerical set.
+
+bin_most_memorable4.png is more memorable than bin_most_memorable5.png. 

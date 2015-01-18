@@ -11,8 +11,8 @@ function [proc_results, results] = classify_mem_network(net, Pt)
     %%%%%%
     % Correct negative and over one values.
     %%%%%%
-    proc_results = results;
+    proc_results = round(results);
     proc_results(results < 0) = 0;
-    proc_results(results > 1) = 1;
+    proc_results(results > 100) = 100;
  
 end

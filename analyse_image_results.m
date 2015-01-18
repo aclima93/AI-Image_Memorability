@@ -1,5 +1,4 @@
 
-iptsetpref('ImshowAxesVisible', 'off');
 
 %%%%%%
 % GrayScale results
@@ -8,13 +7,17 @@ iptsetpref('ImshowAxesVisible', 'off');
 load('results/grayscale/validation_results.mat');
 load('results/grayscale/testing_results.mat');
 load('dataset/grayscale/validation_output.mat');
+load('results/memorability/mem_testing_results.mat');
 load('results/grayscale/binary_validation_results.mat');
 load('results/grayscale/binary_testing_results.mat');
 load('dataset/grayscale/bin_validation_output.mat');
-load('results/memorability/mem_testing_results.mat');
+load('results/memorability/bin_mem_testing_results.mat');
+load('data/filler_images.mat');
+load('data/target_features.mat');
 
-save_images('results/grayscale/', val_results, val_proc_results,test_results, test_proc_results);
-save_images('results/grayscale/binary_', bin_val_results, bin_val_proc_results, binary_test_results, binary_proc_results);
+
+save_feature_images('results/grayscale/', val_results, val_proc_results,test_results, test_proc_results);
+save_feature_images('results/grayscale/binary_', bin_val_results, bin_val_proc_results, binary_test_results, binary_proc_results);
 
 %C = intersect(validation_output, val_proc_results);
 %bin_C = intersect(bin_validation_output, bin_val_proc_results);
@@ -42,50 +45,13 @@ saveas(gcf,'results/grayscale/similarities.png');
 close all;
 
 
+save_memorability_images;
 
-figure ;
-plot(mem_results, 'r');
-axis([0 length(mem_results) min(mem_results) max(mem_results)]);
-title('Image Memorability');
-ylabel('Memorability');
-xlabel('Image');
-saveas(gcf,'results/memorability/memorability_results.png');
-close all;
-
-figure ;
-plot(mem_proc_results, 'b');
-title('Processed Image Memorability');
-ylabel('Memorability');
-xlabel('Image');
-axis([0 length(mem_results) -0.1 1.1]);
-saveas(gcf,'results/memorability/processed_memorability_results.png');
-close all;
-
-
-%%%%%%
-% Sort the values in descending order and get 
-% the most and least memorable images.
-%%%%%%
-load('data/filler_images.mat');
-
-num = 6;
-[sortedValues,sortIndex] = sort(mem_proc_results, 'descend');
-most_memorable = sortIndex(1:num);
-least_memorable = sortIndex(end-num:end);
-figure ;
-for i = 1:num
-    imshow(img(:,:,:,most_memorable(i)), 'Border', 'tight')
-    saveas(gcf,sprintf('results/memorability/most_memorable%d.png',i));
-    imshow(img(:,:,:,least_memorable(i)), 'Border', 'tight')
-    saveas(gcf,sprintf('results/memorability/least_memorable%d.png',i));
-end
-close all;
 
 %%%%%%
 % RGB results
 %%%%%%
 %{
-
+% Copy&Paste above code > replace 'grayscale' with 'rgb'
+% Should work fine. Mostly.
 %}
-
-iptsetpref('ImshowAxesVisible', 'on');

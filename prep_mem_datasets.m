@@ -14,8 +14,8 @@ mem_target = (100/maxValue) * mem_target;
 %%%%%%
 % Apply step threshold
 %%%%%%
-mem_target(mem_target < 50) = 0;
-mem_target(mem_target >= 50) = 1;
+%mem_target(mem_target < 50) = 0;
+%mem_target(mem_target >= 50) = 1;
 
 save('dataset/memorability/mem_target.mat', 'mem_target');
 

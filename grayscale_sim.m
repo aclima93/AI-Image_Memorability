@@ -23,9 +23,9 @@ disp(' ');
 clear all;
 disp(' ');
 
-disp('-----------------------------------------------------');
+disp('--------------------------------------------------');
 disp('Binary feature training, validation and simulation');
-disp('-----------------------------------------------------');
+disp('--------------------------------------------------');
 
 load dataset/grayscale/num_features;
 load dataset/grayscale/training_set;
